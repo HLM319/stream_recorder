@@ -26,7 +26,7 @@ def bilibiliRecoder(roomId:int, path:str):
             print('Start recode.')
             with requests.get(link, headers=headers, stream=True) as source:
                 source.raise_for_status()
-                with open(time.strftime(path + '/' + roomId + '%Y-%m-%d-%H:%M:%S', time.localtime() + '.flv'), 'wb') as file:
+                with open(path + '/' + roomId + time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime()) + '.flv', 'wb') as file:
                     for chuck in source.iter_content(1024):
                         file.write(chuck)
         else:
