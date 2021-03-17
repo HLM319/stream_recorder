@@ -8,7 +8,6 @@ def bilibiliRecoder(roomId:int, path:str):
     roomInfoBaseUrl = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
     headers = {'accept-encoding':'gzip, deflate, br',
                 'accept-language':'zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6',
-                'dnt':'1',
                 'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36'}
     while True:
         roomInfo = requests.get(roomInfoBaseUrl + roomId, headers=headers)
@@ -19,14 +18,13 @@ def bilibiliRecoder(roomId:int, path:str):
             streaminfo = requests.get(streamInfoBaseUrl + roomId + '&quality=' + qn + '&platform=web')
             link = streaminfo.json()['data']['durl'][0]['url']
             downloadHeaders = {'Connection':'keep-alive',
-                                'Host':link.split('/')[2],
                                 'Origin':'https://live.bilibili.com',
                                 'Referer':'https://live.bilibili.com/',
                                 **headers}
             print('Start recode.')
             with requests.get(link, headers=headers, stream=True) as source:
                 source.raise_for_status()
-                with open(path + '/' + roomId + time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime()) + '.flv', 'wb') as file:
+                with open(path + '/' + roomId + '-' + time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime()) + '.flv', 'wb') as file:
                     for chuck in source.iter_content(1024):
                         file.write(chuck)
         else:
