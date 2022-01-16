@@ -6,7 +6,7 @@ import argparse
 def bilibiliRecoder(roomId:int, path:str):
     roomId = str(roomId)
     roomInfoBaseUrl = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
-    headers = {'accept-encoding':'gzip, deflate, br',
+    headers = {'accept-encoding':'gzip, deflate',
                 'accept-language':'zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6',
                 'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36'}
     while True:
